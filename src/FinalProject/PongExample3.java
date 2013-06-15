@@ -1,4 +1,4 @@
-package exampleCode;
+package FinalProject;
 
 import javax.swing.*;
 
