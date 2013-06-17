@@ -1,14 +1,13 @@
-package exampleCode;
-
+package FinalProject;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
-public class TwoPlayerPong extends JPanel implements Runnable{
+public class OnePlayerPong extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
-	private int ballX = 100, ballY = 110, rock1X = 10, rock1Y = 100, rock2X =230, rock2Y = 100;
+	private int ballX = 0, ballY = 200, rock1X = -50, rock1Y = -50, rock2X =380, rock2Y = 200;
 	Thread hilo;
 	int right = 5;
 	int left = -5;
@@ -19,7 +18,7 @@ public class TwoPlayerPong extends JPanel implements Runnable{
 	boolean player1FlagUp, player1FlagDown, player2FlagUp, player2FlagDown;
 	boolean playing, gameOver;
 	
-	public TwoPlayerPong(){
+	public OnePlayerPong(){
 		playing = true;
 		hilo = new Thread(this);
 		hilo.start();
@@ -30,10 +29,10 @@ public class TwoPlayerPong extends JPanel implements Runnable{
 		gc.setColor(Color.black);
 		gc.fillRect(ballX, ballY, 10, 10);
 		
-		gc.fillRect(rock1X, rock1Y, 10, 30);
-		gc.fillRect(rock2X, rock2Y, 10, 30);
+		gc.fillRect(rock1X, rock1Y, 10, 50);
+		gc.fillRect(rock2X, rock2Y, 10, 50);
 		
-		gc.drawString("Score Player 1:"+GamePlayer1, 25,10);
+		//gc.drawString("Score Player 1:"+GamePlayer1, 25,10);
 		gc.drawString("Score Player 2:"+GamePlayer2, 125, 10);
 		
 		if(gameOver)
@@ -50,10 +49,10 @@ public class TwoPlayerPong extends JPanel implements Runnable{
 	public void KeyPressed(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_W:
-			player1FlagUp =true;
+			//player1FlagUp =true;
 			break;
 		case KeyEvent.VK_S:
-			player1FlagDown = true;
+			//player1FlagDown = true;
 			break;
 		case KeyEvent.VK_UP:
 			player2FlagUp = true;
@@ -67,10 +66,10 @@ public class TwoPlayerPong extends JPanel implements Runnable{
 	public void keyReleased(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_W:
-			player1FlagUp = false;
+			//player1FlagUp = false;
 			break;
 		case KeyEvent.VK_S:
-			player1FlagDown = false;
+			//player1FlagDown = false;
 			break;
 		case KeyEvent.VK_UP:
 			player2FlagUp = false;
@@ -143,7 +142,7 @@ public class TwoPlayerPong extends JPanel implements Runnable{
 					GamePlayer1++;
 				if(ballX == 0)
 					GamePlayer2++;
-				if(GamePlayer1 == 6 || GamePlayer2 == 6){
+				if(GamePlayer1 == 10 || GamePlayer2 == 10){
 					playing =false;
 					gameOver = true;
 				}
