@@ -1,5 +1,4 @@
-package FinalProject;
-
+ 
 import javax.swing.*; 
 
 import java.awt.*; 
@@ -17,20 +16,18 @@ import FinalProject.*;
 public class GameManager extends JFrame { 
 	private static final long serialVersionUID = 1L; 
 	
-	protected TwoPlayer game1 = new TwoPlayer();
-	protected TwoPlayer game2; 
-	protected int numPlayers;
+	protected OnePlayerExample game1 = new OnePlayerExample();
+	//protected TwoPlayer game2; 
+	protected int numPlayers = 1;
 	
     public GameManager() { 
         //super("Choose Mode"); 
         super("RTS_Pong");
-        
-        numPlayers = 1;
 		
 		//set up menu
         JMenuBar bar = new JMenuBar();
 		
-		JMenu mode = new JMenu("Mode");
+		JMenu players = new JMenu("Players");
 		JMenuItem onePlayerMode = new JMenuItem("1");
 		JMenuItem twoPlayerMode = new JMenuItem("2");
 		onePlayerMode.addActionListener(new ActionListener() {
@@ -43,22 +40,22 @@ public class GameManager extends JFrame {
 				numPlayers = 2;
 			}			
 		});
-		mode.add(onePlayerMode);
-		mode.add(twoPlayerMode);
-		bar.add(mode);
+		players.add(onePlayerMode);
+		players.add(twoPlayerMode);
+		bar.add(players);
 		
 		JMenu game = new JMenu("Game");
-		JMenuItem startGame = new JMenuItem("start");
-		JMenuItem stopGame = new JMenuItem("stop");
+		JMenuItem startGame = new JMenuItem("Start");
+		JMenuItem stopGame = new JMenuItem("Stop");
 		
 		startGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (numPlayers == 1){
 					game1.start();
 				} else {
-					game2 = new TwoPlayer();
-					game2.start();
-				}
+					//game2 = new TwoPlayer();
+					//game2.start();
+				}				
 			}			
 		});
 		
@@ -66,9 +63,10 @@ public class GameManager extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (numPlayers == 1){
 					game1.stop();
+					
 				} else {
-					game2 = new TwoPlayer();
-					game2.stop();
+					//game2 = new TwoPlayer();
+					//game2.stop();
 				}
 			}			
 		});
@@ -76,6 +74,34 @@ public class GameManager extends JFrame {
 		game.add(stopGame);
 		bar.add(game);
 		setJMenuBar(bar);
+		
+		JMenu mode = new JMenu("Mode");
+		
+		JMenuItem easy = new JMenuItem("Easy (default)");
+		easy.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				OnePlayerExample.difficulty = 1;
+			}
+		});
+		
+		JMenuItem medium = new JMenuItem("Medium");
+		medium.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				OnePlayerExample.difficulty = 2;
+			}
+		});
+		
+		JMenuItem hard = new JMenuItem("Hard");
+		hard.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				OnePlayerExample.difficulty = 3;
+			}
+		});
+		
+		mode.add(easy);
+		mode.add(medium);
+		mode.add(hard);
+		bar.add(mode);
 		
 		this.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
@@ -104,5 +130,4 @@ public class GameManager extends JFrame {
 		gm.setVisible(true);
 			
     } //end main 
-  
 }

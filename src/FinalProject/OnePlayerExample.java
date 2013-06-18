@@ -1,3 +1,4 @@
+
 /** 
  *  
  */
@@ -19,7 +20,8 @@ public class OnePlayerExample extends JPanel implements Runnable {
     //set screen size
     int xsize = 800; int ysize = 600;
     //set object sizes
-	int paddleWidth = 20; int paddleLength = 100;
+	int paddleWidth = 20;
+	int paddleLength = 100;
 	int ballSize = 20;
 	
 	//initialize positions
@@ -36,20 +38,24 @@ public class OnePlayerExample extends JPanel implements Runnable {
 	int width, height;
 	int hits, misses;
 	boolean playerFlagUp, playerFlagDown; //use to move paddle
-	boolean playing = false, gameOver;
+	boolean playing = false;
+	boolean gameOver;
 	boolean leftRight = true;
 	boolean upDown = false;
 	Random rand = new Random();
+	
+	// difficulty
+	public static int difficulty = 1;
     //*** end of definitions ***
 	
     public OnePlayerExample() { 
         super(); 
         this.setPreferredSize(new Dimension(xsize, ysize)); 
-
+        
         Thread t = new Thread(this);
 		t.start();
-    } 
-  
+    }
+    
     private static final long serialVersionUID = 1L; 
     
     public void paintComponent(Graphics _g) { //overriding parent component implementations
@@ -70,7 +76,13 @@ public class OnePlayerExample extends JPanel implements Runnable {
     } 
     
     public void start(){
-         playing = true;
+    	if (gameOver) {
+    		Reset();
+    	}
+    	if (difficulty > 2) {
+    		paddleLength = 60;
+    	}
+        playing = true;
     }
     
     public void stop(){
@@ -99,12 +111,23 @@ public class OnePlayerExample extends JPanel implements Runnable {
 			dy = up;
 		}
 		
+		// increase ball speed for difficulty "medium" and "hard"
+		if (difficulty > 1) {
+			dx = dx * 1.4;
+			dy = dy * 1.4;
+		}
+		
 		ballX+=dx; ballY+=dy;
 		positionBall(ballX,ballY);
+		
+		// reset ball speed (each time through) for difficulty "medium" and "hard"
+		if (difficulty > 1) {
+			dx = dx / 1.4;
+			dy = dy / 1.4;
+		}
 }
 
-protected void positionBall(int nx, int ny)
-{
+protected void positionBall(int nx, int ny) {
 	ballX = nx;
 	ballY = ny;
 	this.width=this.getWidth();
@@ -113,15 +136,15 @@ protected void positionBall(int nx, int ny)
 }
 
 
-protected void movePaddle(){
+protected void movePaddle() {
 	if(playerFlagUp == true && paddleY>=0)
-		paddleY+=down;
+		paddleY+=(down * 2);
 	if(playerFlagDown == true && paddleY<=(this.getHeight()-paddleLength))
-		paddleY+=up;
+		paddleY+=(up * 2);
 	positionPaddle(paddleX, paddleY);
 }
 
-protected void positionPaddle(int x, int y){
+protected void positionPaddle(int x, int y) {
 	this.paddleX = x;
 	this.paddleY = y;
 	repaint();
@@ -184,6 +207,27 @@ public void keyReleased(KeyEvent e){
 		break;
 	}
 }
+
+public void Reset() {
+	right = 10; 
+	left = -10;
+	up = 10;
+	down = -10;
+	step = Math.sqrt(left*left + up*up);
+	dx=right;
+	dy=0;
+	hits = 0;
+	misses = 0;
+	playing = false;
+	gameOver = false;
+	leftRight = true;
+	upDown = false;
+	rand = new Random();
+	ballX = ballSize;
+	ballY = ysize/2;
+	paddleX = xsize - paddleWidth;
+	paddleY = ysize/2;
+}
   
     @Override
     public void run() { 
@@ -200,16 +244,14 @@ public void keyReleased(KeyEvent e){
 						playing =false;
 						gameOver = true;
 						repaint();
-					}	
+					}
 				} catch (InterruptedException ie) {	
 				}
 				
 				
 	        } else {
 	        	Thread.yield();
-	        }
-			
+	        }	
         } 
     }    
 }
-
