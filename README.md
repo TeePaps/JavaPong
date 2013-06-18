@@ -7,11 +7,9 @@
 2. Import project into Eclipse workspace
 
 ###Recent Changes:###
-OnePlayer and GameManager .java files have been sent via email.  (I don't know how to add files to GitHub.)
-File doesn't implement any game functionality, simply builds off example in class.
-Only working code is menu button (to determine one player / two player mode).
+One player functionality is now in place.  Can choose difficulty of easy, medium, hard.  Two player functionality is beta.
 
-###Task delegation (can be modified if necessary):###
-* Sally:  GameManager
-* Ted:  Ball/Paddle (separate classes?)
-* Ryan:  OnePlayer
+###To Do:###
+* Clean up two-player mode
+* Get all existing code to work together nicely
+* Clean up interface
