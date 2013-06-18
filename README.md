@@ -13,3 +13,9 @@ One player functionality is now in place.  Can choose difficulty of easy, medium
 * Clean up two-player mode
 * Get all existing code to work together nicely
 * Clean up interface
+
+
+###sdh update to game manager 6/18###
+*should now be able to switch between games 
+*paddle controls seem to work
+*one issue - must add "clear" function to remove old game image
