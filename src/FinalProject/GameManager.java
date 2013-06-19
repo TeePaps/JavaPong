@@ -18,14 +18,25 @@ import java.awt.event.KeyEvent;
 public class GameManager extends JFrame { 
 	private static final long serialVersionUID = 1L; 
 	
+	//set screen size
+    int xsize = 800; int ysize = 600;
+    
 	protected OnePlayerExample game1 = new OnePlayerExample();
 	protected TwoPlayer game2 = new TwoPlayer(); 
 	protected int numPlayers = 1;
-	
+	protected boolean firstGame1 = true;
+	protected boolean firstGame2 = true;
+
     public GameManager() { 
         //super("Choose Mode"); 
-        super("RTS_Pong");
-		
+    	super("RTS_Pong");
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(xsize, ysize));
+		setMaximumSize(new Dimension(xsize, ysize));
+		setBounds(new Rectangle(100, 100, xsize, ysize));
+		setResizable(false);
+   
+    	
 		//set up menu
         JMenuBar bar = new JMenuBar();
 		
@@ -52,20 +63,28 @@ public class GameManager extends JFrame {
 		startGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (numPlayers == 2) {
-					getContentPane().add(game2, BorderLayout.CENTER);
-					pack();
+					if (firstGame2) {
+						getContentPane().add(game2, BorderLayout.CENTER);
+						pack();
+						firstGame2 = false;
+					}
+					game1.stop();
 					game2.start();
 				} else {
-					getContentPane().add(game1, BorderLayout.CENTER);
-					pack();
+					if (firstGame1) {
+						getContentPane().add(game1, BorderLayout.CENTER);
+						pack();
+						firstGame1 = false;
+					}
+					game2.stop();
 					game1.start();
 				}
 			}			
 		});
 		stopGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game1.stop();
-				game2.stop();
+					game1.stop();
+					game2.stop();
 			}			
 		});
 		game.add(startGame);
@@ -113,7 +132,7 @@ public class GameManager extends JFrame {
         pack(); 
     }  //end of constructor 
     
-    protected void formKeyPressed(KeyEvent e){
+	protected void formKeyPressed(KeyEvent e){
 		switch(numPlayers){
 		case 1:
 			game1.KeyPressed(e);
@@ -135,10 +154,11 @@ public class GameManager extends JFrame {
 		}
 	}
       
-    public static void main(String[] args) {      
-       
-		GameManager gm = new GameManager();
-		gm.setVisible(true);
-			
+    public static void main(String[] args) { 
+    	
+				GameManager gm = new GameManager();
+				gm.setVisible(true);
+				
     } //end main 
 }
+

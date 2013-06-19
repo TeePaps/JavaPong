@@ -1,4 +1,3 @@
-
 /** 
  *  
  */
@@ -12,7 +11,7 @@ import java.util.Random;
 import javax.swing.JPanel; 
   
 /** 
- * @author rto5021 
+ * @authors Ryan Ottney, Sally Hunsberger, Ted Papaioannou 
  * 
  */
 public class OnePlayerExample extends JPanel implements Runnable {  
@@ -39,19 +38,21 @@ public class OnePlayerExample extends JPanel implements Runnable {
 	int hits, misses;
 	boolean playerFlagUp, playerFlagDown; //use to move paddle
 	boolean playing = false;
-	boolean gameOver;
+	boolean gameOver = false;
 	boolean leftRight = true;
 	boolean upDown = false;
 	Random rand = new Random();
+	
+	boolean clearScreen = true;
 	
 	// difficulty
 	public static int difficulty = 1;
     //*** end of definitions ***
 	
     public OnePlayerExample() { 
-        super(); 
+        super();
         this.setPreferredSize(new Dimension(xsize, ysize)); 
-        
+
         Thread t = new Thread(this);
 		t.start();
     }
@@ -63,16 +64,19 @@ public class OnePlayerExample extends JPanel implements Runnable {
     	Graphics2D g = (Graphics2D)_g;
         
         setOpaque(false);
-		g.setColor(Color.black);
-		g.fillRect(ballX, ballY, ballSize, ballSize);
+        if (!clearScreen) {
+        	setOpaque(false);
+        	g.setColor(Color.black);
+        	g.fillRect(ballX, ballY, ballSize, ballSize);
 		
-		g.fillRect(paddleX, paddleY, paddleWidth, paddleLength);
+        	g.fillRect(paddleX, paddleY, paddleWidth, paddleLength);
 		
-		g.drawString("Number of Hits: "+hits, xsize/2 - 100, 20);
-		g.drawString("Number of Misses: "+misses, xsize/2 + 100, 20);
+        	g.drawString("Number of Hits: "+hits, xsize/2 - 100, 20);
+        	g.drawString("Number of Misses: "+misses, xsize/2 + 100, 20);
 		
-		if(gameOver)
+        	if(gameOver)
 			g.drawString("GAME OVER", xsize/2, 60);
+        }
     } 
     
     public void start(){
@@ -83,13 +87,15 @@ public class OnePlayerExample extends JPanel implements Runnable {
     		paddleLength = 60;
     	}
         playing = true;
+        clearScreen = false;
     }
     
     public void stop(){
         playing = false;
+        clearScreen = true;
+        repaint();
     }
     
-   
     protected void moveBall() {
 		if (dx>0 && ballX>=xsize-ballSize) { //ball at player end of court
 			dx = left;
@@ -222,7 +228,6 @@ public void Reset() {
 	gameOver = false;
 	leftRight = true;
 	upDown = false;
-	rand = new Random();
 	ballX = ballSize;
 	ballY = ysize/2;
 	paddleX = xsize - paddleWidth;
@@ -232,19 +237,22 @@ public void Reset() {
     @Override
     public void run() { 
         while(true) { 
-	        if (playing){
+	        if (playing && !gameOver){
 	        	try {
 					Thread.sleep(1000/30); //sleep for 1/30 second
-					moveBall();
-					movePaddle();
 					
-					if (dx>0) checkForHit();
+					//if (!gameOver) {
+						moveBall();
+						movePaddle();
+						if (dx>0) checkForHit();
 						
-					if(hits == 11 || misses == 11){
-						playing =false;
-						gameOver = true;
-						repaint();
-					}
+						//if(hits == 11 || misses == 11){
+						if(hits == 4 || misses == 4){
+							gameOver = true;
+							repaint();
+							playing = false;
+						}
+					//}
 				} catch (InterruptedException ie) {	
 				}
 				
@@ -255,3 +263,5 @@ public void Reset() {
         } 
     }    
 }
+
+

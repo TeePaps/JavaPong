@@ -11,7 +11,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 /**
- * @author rto5021
+ * @authors Ted Papaioannou, Ryan Ottney, Sally Hunsberger
  * 
  */
 public class TwoPlayer extends JPanel implements Runnable {
@@ -21,7 +21,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 	int ysize = 600;
 	// set object sizes
 	int ballSize = 20;
-
+	
 	// initialize positions
 	private int ballX = ballSize, ballY = ysize / 2;
 
@@ -33,12 +33,14 @@ public class TwoPlayer extends JPanel implements Runnable {
 	double step = Math.sqrt(left * left + up * up);
 	double dx = right, dy = 0; // use to move ball at different angles
 	int width, height;
-	int hits, misses;
+	int hits1, hits2;
 	boolean player1FlagUp, player1FlagDown, player2FlagUp, player2FlagDown;
-	boolean playing = false, gameOver;
+	boolean playing = false, gameOver = false;
 	boolean leftRight = true;
 	boolean upDown = false;
 	Random rand = new Random();
+	
+	boolean clearScreen = true;
 	
 	Paddle playerOne, playerTwo;
 
@@ -47,7 +49,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 	public TwoPlayer() {
 		super();
 		this.setPreferredSize(new Dimension(xsize, ysize));
-		
+
 		playerOne = new Paddle(xsize, ysize, 1);
 		playerTwo = new Paddle(xsize, ysize, 2);
 
@@ -63,32 +65,39 @@ public class TwoPlayer extends JPanel implements Runnable {
 		Graphics2D g = (Graphics2D) _g;
 
 		setOpaque(false);
-		g.setColor(Color.black);
-		g.fillRect(ballX, ballY, ballSize, ballSize);
-		
-		playerOne.drawPaddle(g);
-		playerTwo.drawPaddle(g);
-
-		g.drawString("Number of Hits: " + hits, xsize / 2 - 100, 20);
-		g.drawString("Number of Misses: " + misses, xsize / 2 + 100, 20);
-
-		if (gameOver)
-			g.drawString("GAME OVER", xsize / 2, 60);
+		if (!clearScreen) {
+			g.setColor(Color.black);
+			g.fillRect(ballX, ballY, ballSize, ballSize);
+			
+			playerOne.drawPaddle(g);
+			playerTwo.drawPaddle(g);
+	
+			g.drawString("Player 1: " + hits1, xsize / 2 - 100, 20);
+			g.drawString("Player 2: " + hits2, xsize / 2 + 100, 20);
+	
+			if (gameOver)
+				g.drawString("GAME OVER", xsize / 2, 60);
+	    }
 	}
 
 	public void start() {
+		if (gameOver) {
+    		Reset();
+    	}
 		playing = true;
+		clearScreen = false;
 	}
 
 	public void stop() {
 		playing = false;
+		clearScreen = true;
+		repaint();
 	}
 
 	protected void moveBall() {
 		if (dx > 0 && ballX >= xsize - ballSize) { // ball at player end of
 													// court
 			dx = left;
-			misses++;
 		} else if (dx < 0 && ballX <= 0) { // ball at server end of court
 			dx = right;
 			// select up or down
@@ -122,7 +131,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 		if (ballX <= (paddle.getX() + ballSize)) {
 			if (ballY >= paddle.getY() - ballSize + 1
 					&& ballY <= paddle.getY() + paddle.getLength() - 1) {
-				hits++;
+				hits1++;
 				dx = right;
 				dy = 0; // this is a direct hit
 				int paddleCenter = paddle.getY() + paddle.getLength() / 2;
@@ -158,7 +167,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 		if (ballX >= (paddle.getX() - ballSize)) {
 			if (ballY >= paddle.getY() - ballSize + 1
 					&& ballY <= paddle.getY() + paddle.getLength() - 1) {
-				hits++;
+				hits2++;
 				dx = left;
 				dy = 0; // this is a direct hit
 				int paddleCenter = paddle.getY() + paddle.getLength() / 2;
@@ -223,11 +232,25 @@ public class TwoPlayer extends JPanel implements Runnable {
 			break;
 		}
 	}
+	
+	public void Reset() {
+		step = Math.sqrt(left*left + up*up);
+		dx=right;
+		dy=0;
+		hits1 = 0;
+		hits2 = 0;
+		playing = false;
+		gameOver = false;
+		leftRight = true;
+		upDown = false;
+		ballX = ballSize;
+		ballY = ysize/2;
+	}
 
 	@Override
 	public void run() {
 		while (true) {
-			if (playing) {
+			if (playing && !gameOver) {
 				try {
 					Thread.sleep(1000 / 30); // sleep for 1/30 second
 					moveBall();
@@ -246,10 +269,11 @@ public class TwoPlayer extends JPanel implements Runnable {
 						checkForHitLeft(playerTwo);
 					}
 
-					if (hits == 11 || misses == 11) {
-						playing = false;
+					//if (hits == 11 || misses == 11) {
+					if(hits1 == 4 || hits2 == 4){
 						gameOver = true;
 						repaint();
+						playing = false;
 					}
 				} catch (InterruptedException ie) {
 				}
