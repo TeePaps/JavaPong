@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
  */
 public class Paddle {
 	
-	private int Width = 20; 
+	private int Width = 20;
 	private int Length = 100;
 	private int ScreenWidth, ScreenHeight;
 	private int X;
@@ -68,5 +68,9 @@ public class Paddle {
 
 	public int getWidth() {
 		return Width;
+	}
+	
+	public void setLength(int length) {
+		Length = length;
 	}
 }
