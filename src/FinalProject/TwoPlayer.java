@@ -21,7 +21,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 	int ysize = 600;
 	// set object sizes
 	int ballSize = 20;
-	
+
 	// initialize positions
 	private int ballX = ballSize, ballY = ysize / 2;
 
@@ -39,9 +39,11 @@ public class TwoPlayer extends JPanel implements Runnable {
 	boolean leftRight = true;
 	boolean upDown = false;
 	Random rand = new Random();
-	
+
 	boolean clearScreen = true;
 	
+	public static int difficulty = 1;
+
 	Paddle playerOne, playerTwo;
 
 	// *** end of definitions ***
@@ -68,13 +70,13 @@ public class TwoPlayer extends JPanel implements Runnable {
 		if (!clearScreen) {
 			g.setColor(Color.black);
 			g.fillRect(ballX, ballY, ballSize, ballSize);
-			
+
 			playerOne.drawPaddle(g);
 			playerTwo.drawPaddle(g);
-	
+
 			g.drawString("Player 1: " + hits1, xsize / 2 - 100, 20);
 			g.drawString("Player 2: " + hits2, xsize / 2 + 100, 20);
-	
+
 			if (gameOver)
 				g.drawString("GAME OVER", xsize / 2, 60);
 	    }
@@ -83,6 +85,10 @@ public class TwoPlayer extends JPanel implements Runnable {
 	public void start() {
 		if (gameOver) {
     		Reset();
+    	}
+		if (difficulty > 2) {
+    		playerOne.setLength(60);
+    		playerTwo.setLength(60);
     	}
 		playing = true;
 		clearScreen = false;
@@ -113,10 +119,20 @@ public class TwoPlayer extends JPanel implements Runnable {
 		} else if (dy < 0 && ballY <= 0) {
 			dy = up;
 		}
+		
+		if (difficulty > 1) {
+			dx = dx * 1.4;
+			dy = dy * 1.4;
+		}
 
 		ballX += dx;
 		ballY += dy;
 		positionBall(ballX, ballY);
+		
+		if (difficulty > 1) {
+			dx = dx / 1.4;
+			dy = dy / 1.4;
+		}
 	}
 
 	protected void positionBall(int nx, int ny) {
@@ -162,7 +178,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 			}
 		}
 	}
-	
+
 	protected void checkForHitRight(Paddle paddle) {
 		if (ballX >= (paddle.getX() - ballSize)) {
 			if (ballY >= paddle.getY() - ballSize + 1
@@ -213,7 +229,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 		case KeyEvent.VK_DOWN:
 			player1FlagDown = true;
 			break;
-			
+
 		}
 	}
 	public void keyReleased(KeyEvent e){
@@ -232,7 +248,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 			break;
 		}
 	}
-	
+
 	public void Reset() {
 		step = Math.sqrt(left*left + up*up);
 		dx=right;
@@ -269,8 +285,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 						checkForHitLeft(playerTwo);
 					}
 
-					//if (hits == 11 || misses == 11) {
-					if(hits1 == 4 || hits2 == 4){
+					if(hits1 == 11 || hits2 == 11){
 						gameOver = true;
 						repaint();
 						playing = false;

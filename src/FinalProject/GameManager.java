@@ -17,7 +17,7 @@ import java.awt.event.KeyEvent;
  */
 public class GameManager extends JFrame { 
 	private static final long serialVersionUID = 1L; 
-	
+
 	//set screen size
     int xsize = 800; int ysize = 600;
     
@@ -39,7 +39,7 @@ public class GameManager extends JFrame {
     	
 		//set up menu
         JMenuBar bar = new JMenuBar();
-		
+
 		JMenu players = new JMenu("Players");
 		JMenuItem onePlayerMode = new JMenuItem("1");
 		JMenuItem twoPlayerMode = new JMenuItem("2");
@@ -56,7 +56,7 @@ public class GameManager extends JFrame {
 		players.add(onePlayerMode);
 		players.add(twoPlayerMode);
 		bar.add(players);
-		
+
 		JMenu game = new JMenu("Game");
 		JMenuItem startGame = new JMenuItem("Start");
 		JMenuItem stopGame = new JMenuItem("Stop");
@@ -90,36 +90,36 @@ public class GameManager extends JFrame {
 		game.add(startGame);
 		game.add(stopGame);
 		bar.add(game);
-		
+
 		JMenu mode = new JMenu("Mode");
 		JMenuItem easy = new JMenuItem("Easy (default)");
 		easy.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				OnePlayerExample.difficulty = 1;
-				//TwoPlayer.difficulty = 1;
+				TwoPlayer.difficulty = 1;
 			}
 		});
 		JMenuItem medium = new JMenuItem("Medium");
 		medium.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				OnePlayerExample.difficulty = 2;
-				//TwoPlayer.difficulty = 2;
+				TwoPlayer.difficulty = 2;
 			}
 		});
 		JMenuItem hard = new JMenuItem("Hard");
 		hard.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				OnePlayerExample.difficulty = 3;
-				//TwoPlayer.difficulty = 3;
+				TwoPlayer.difficulty = 3;
 			}
 		});
 		mode.add(easy);
 		mode.add(medium);
 		mode.add(hard);
 		bar.add(mode);
-		
+
 		setJMenuBar(bar);
-		
+
 		this.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
 				formKeyPressed(e);
@@ -128,7 +128,7 @@ public class GameManager extends JFrame {
 				formKeyReleased(e);
 			}
 		});
-		
+
         pack(); 
     }  //end of constructor 
     
@@ -142,7 +142,7 @@ public class GameManager extends JFrame {
 			break;
 		}
 	}
-	
+
 	protected void formKeyReleased(KeyEvent e){
 		switch(numPlayers){
 		case 1:
@@ -158,7 +158,6 @@ public class GameManager extends JFrame {
     	
 				GameManager gm = new GameManager();
 				gm.setVisible(true);
-				
+
     } //end main 
 }
-
