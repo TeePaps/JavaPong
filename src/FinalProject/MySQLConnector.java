@@ -40,13 +40,4 @@ public class MySQLConnector {
 		conn.close();
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException,
-			SQLException {
-		String name = "TAP";
-		int score = 500;
-		
-		addNewHighScore(name, score);
-		
-	}
-
 }

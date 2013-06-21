@@ -6,6 +6,7 @@ package FinalProject;
 import java.awt.*; 
 
 import java.awt.event.KeyEvent; 
+import java.sql.SQLException;
 import java.util.Random;
   
 import javax.swing.JFrame;
@@ -237,11 +238,13 @@ public void Reset() {
 	paddleY = ysize/2;
 }
 
-protected void highScore() {
+protected void highScore() throws ClassNotFoundException, SQLException {
 	JFrame frame = new JFrame("Game Over");
     // prompt the user to enter their initials
     String name = JOptionPane.showInputDialog(frame, "Enter your initials");
+    
     // update high score list with and score
+    MySQLConnector.addNewHighScore(name, score);
 }
   
     @Override
@@ -265,6 +268,12 @@ protected void highScore() {
 						}
 					//}
 				} catch (InterruptedException ie) {	
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 
