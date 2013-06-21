@@ -285,8 +285,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 						checkForHitLeft(playerTwo);
 					}
 
-					//if (hits == 11 || misses == 11) {
-					if(hits1 == 4 || hits2 == 4){
+					if(hits1 == 11 || hits2 == 11){
 						gameOver = true;
 						repaint();
 						playing = false;

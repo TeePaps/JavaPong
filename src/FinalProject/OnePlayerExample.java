@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent; 
 import java.util.Random;
   
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel; 
   
 /** 
@@ -44,6 +46,7 @@ public class OnePlayerExample extends JPanel implements Runnable {
 	Random rand = new Random();
 
 	boolean clearScreen = true;
+	int score = 0;
 
 	// difficulty
 	public static int difficulty = 1;
@@ -233,6 +236,13 @@ public void Reset() {
 	paddleX = xsize - paddleWidth;
 	paddleY = ysize/2;
 }
+
+protected void highScore() {
+	JFrame frame = new JFrame("Game Over");
+    // prompt the user to enter their initials
+    String name = JOptionPane.showInputDialog(frame, "Enter your initials");
+    // update high score list with and score
+}
   
     @Override
     public void run() { 
@@ -246,9 +256,10 @@ public void Reset() {
 						movePaddle();
 						if (dx>0) checkForHit();
 
-						//if(hits == 11 || misses == 11){
-						if(hits == 4 || misses == 4){
+						if(misses == 3){
 							gameOver = true;
+							score = hits * difficulty;
+							highScore();
 							repaint();
 							playing = false;
 						}
