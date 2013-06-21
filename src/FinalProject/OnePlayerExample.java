@@ -22,11 +22,11 @@ public class OnePlayerExample extends JPanel implements Runnable {
 	int paddleWidth = 20;
 	int paddleLength = 100;
 	int ballSize = 20;
-	
+
 	//initialize positions
 	private int ballX = ballSize, ballY = ysize/2, 
 				paddleX = xsize - paddleWidth, paddleY = ysize/2;
-	
+
 	//define speed of movement
 	int right = 10; 
 	int left = -10;
@@ -42,13 +42,13 @@ public class OnePlayerExample extends JPanel implements Runnable {
 	boolean leftRight = true;
 	boolean upDown = false;
 	Random rand = new Random();
-	
+
 	boolean clearScreen = true;
-	
+
 	// difficulty
 	public static int difficulty = 1;
     //*** end of definitions ***
-	
+
     public OnePlayerExample() { 
         super();
         this.setPreferredSize(new Dimension(xsize, ysize)); 
@@ -68,12 +68,12 @@ public class OnePlayerExample extends JPanel implements Runnable {
         	setOpaque(false);
         	g.setColor(Color.black);
         	g.fillRect(ballX, ballY, ballSize, ballSize);
-		
+
         	g.fillRect(paddleX, paddleY, paddleWidth, paddleLength);
-		
+
         	g.drawString("Number of Hits: "+hits, xsize/2 - 100, 20);
         	g.drawString("Number of Misses: "+misses, xsize/2 + 100, 20);
-		
+
         	if(gameOver)
 			g.drawString("GAME OVER", xsize/2, 60);
         }
@@ -110,22 +110,22 @@ public class OnePlayerExample extends JPanel implements Runnable {
 				dy = down;
 			}
 		}
-		
+
 		if (dy>0 && ballY>=ysize-ballSize) {
 			dy = down;
 		} else if (dy<0 && ballY<=0) {
 			dy = up;
 		}
-		
+
 		// increase ball speed for difficulty "medium" and "hard"
 		if (difficulty > 1) {
 			dx = dx * 1.4;
 			dy = dy * 1.4;
 		}
-		
+
 		ballX+=dx; ballY+=dy;
 		positionBall(ballX,ballY);
-		
+
 		// reset ball speed (each time through) for difficulty "medium" and "hard"
 		if (difficulty > 1) {
 			dx = dx / 1.4;
@@ -199,7 +199,7 @@ public void KeyPressed(KeyEvent e){
 	case KeyEvent.VK_DOWN:
 		playerFlagDown = true;
 		break;
-		
+
 	}
 }
 
@@ -240,12 +240,12 @@ public void Reset() {
 	        if (playing && !gameOver){
 	        	try {
 					Thread.sleep(1000/30); //sleep for 1/30 second
-					
+
 					//if (!gameOver) {
 						moveBall();
 						movePaddle();
 						if (dx>0) checkForHit();
-						
+
 						//if(hits == 11 || misses == 11){
 						if(hits == 4 || misses == 4){
 							gameOver = true;
@@ -255,13 +255,11 @@ public void Reset() {
 					//}
 				} catch (InterruptedException ie) {	
 				}
-				
-				
+
+
 	        } else {
 	        	Thread.yield();
 	        }	
         } 
     }    
 }
-
-
