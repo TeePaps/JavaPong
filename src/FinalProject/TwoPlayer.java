@@ -89,6 +89,9 @@ public class TwoPlayer extends JPanel implements Runnable {
 		if (difficulty > 2) {
     		playerOne.setLength(60);
     		playerTwo.setLength(60);
+    	} else {
+    		playerOne.setLength(100);
+    		playerTwo.setLength(100);
     	}
 		playing = true;
 		clearScreen = false;

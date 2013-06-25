@@ -89,6 +89,8 @@ public class OnePlayerExample extends JPanel implements Runnable {
     	}
     	if (difficulty > 2) {
     		paddleLength = 60;
+    	} else {
+    		paddleLength = 100;
     	}
         playing = true;
         clearScreen = false;
