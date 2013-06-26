@@ -69,7 +69,8 @@ public class TwoPlayer extends JPanel implements Runnable {
 		setOpaque(false);
 		if (!clearScreen) {
 			g.setColor(Color.black);
-			g.fillRect(ballX, ballY, ballSize, ballSize);
+			//g.fillRect(ballX, ballY, ballSize, ballSize);
+			g.fillOval(ballX, ballY, ballSize, ballSize);
 
 			playerOne.drawPaddle(g);
 			playerTwo.drawPaddle(g);

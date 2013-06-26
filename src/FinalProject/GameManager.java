@@ -21,7 +21,7 @@ public class GameManager extends JFrame {
 	//set screen size
     int xsize = 800; int ysize = 600;
     
-	protected OnePlayerExample game1 = new OnePlayerExample();
+	protected OnePlayer game1 = new OnePlayer();
 	protected TwoPlayer game2 = new TwoPlayer(); 
 	protected int numPlayers = 1;
 	protected boolean firstGame1 = true;
@@ -95,21 +95,21 @@ public class GameManager extends JFrame {
 		JMenuItem easy = new JMenuItem("Easy (default)");
 		easy.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				OnePlayerExample.difficulty = 1;
+				OnePlayer.difficulty = 1;
 				TwoPlayer.difficulty = 1;
 			}
 		});
 		JMenuItem medium = new JMenuItem("Medium");
 		medium.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				OnePlayerExample.difficulty = 2;
+				OnePlayer.difficulty = 2;
 				TwoPlayer.difficulty = 2;
 			}
 		});
 		JMenuItem hard = new JMenuItem("Hard");
 		hard.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				OnePlayerExample.difficulty = 3;
+				OnePlayer.difficulty = 3;
 				TwoPlayer.difficulty = 3;
 			}
 		});

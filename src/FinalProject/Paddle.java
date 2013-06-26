@@ -34,7 +34,8 @@ public class Paddle {
 	}
 	
 	public void drawPaddle(Graphics2D g) {
-		g.fillRect(X, Y, Width, Length);
+		//g.fillRect(X, Y, Width, Length);
+		g.fillRoundRect(X, Y, Width, Length, 7, 7);
 	}
 	
 	public void setPaddleVel(int vel) {

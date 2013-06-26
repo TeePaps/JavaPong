@@ -9,7 +9,7 @@ public class MySQLConnector {
 
 	// Connection string.javapong is the database the program
 	// is connecting to. You can include user and password after this
-	// by adding (say) ?user=paulr&password=paulr. Not recommended!
+	// by adding (say) ?user=ted&password=pass. Not recommended!
 
 	private static final String CONNECTION = "jdbc:mysql://127.0.0.1/javapong";
 
