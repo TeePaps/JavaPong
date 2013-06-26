@@ -157,29 +157,16 @@ public class TwoPlayer extends JPanel implements Runnable {
 				dy = 0; // this is a direct hit
 				int paddleCenter = paddle.getY() + paddle.getLength() / 2;
 				int ballCenter = ballY + ballSize / 2;
-				int offset = ballCenter - paddleCenter;
-				int delta = paddle.getLength() / 10;
-				// set dx and dy dependent on region of paddle hit
+				double offset = ballCenter - paddleCenter;
+				double halfPaddle = paddle.getLength()/2;
+				//set dx and dy dependent on region of paddle hit
+				double angleDeg = 90.0 + 60.0 * (offset/halfPaddle);
+				dx = +step * Math.sin(Math.toRadians(angleDeg));
 				if (offset < 0) {
-					if (Math.abs(offset) > 4 * delta) {
-						dx = +step * Math.sin(Math.toRadians(30.0));
-						dy = -Math.sqrt(step * step - dx * dx);
-					} else if (Math.abs(offset) > 2 * delta) {
-						dx = +step * Math.sin(Math.toRadians(60.0));
-						dy = -Math.sqrt(step * step - dx * dx);
-					}
+					dy = -Math.sqrt(step*step - dx*dx);
 				} else if (offset > 0) {
-					if (Math.abs(offset) > 4 * delta) {
-						dx = +step * Math.sin(Math.toRadians(150.0));
-						dy = Math.sqrt(step * step - dx * dx);
-					} else if (Math.abs(offset) > 2 * delta) {
-						dx = +step * Math.sin(Math.toRadians(120.0));
-						dy = Math.sqrt(step * step - dx * dx);
-					}
+					dy = Math.sqrt(step*step - dx*dx);
 				}
-				// System.out.format("\noffset is %d", offset);
-				// System.out.format("\ndx is %f, dy is %f", dx, dy);
-
 			}
 		}
 	}
@@ -194,29 +181,16 @@ public class TwoPlayer extends JPanel implements Runnable {
 				dy = 0; // this is a direct hit
 				int paddleCenter = paddle.getY() + paddle.getLength() / 2;
 				int ballCenter = ballY + ballSize / 2;
-				int offset = ballCenter - paddleCenter;
-				int delta = paddle.getLength() / 10;
-				// set dx and dy dependent on region of paddle hit
+				double offset = ballCenter - paddleCenter;
+				double halfPaddle = paddle.getLength()/2;
+				//set dx and dy dependent on region of paddle hit
+				double angleDeg = 90.0 + 60.0 * (offset/halfPaddle);
+				dx = -step * Math.sin(Math.toRadians(angleDeg));
 				if (offset < 0) {
-					if (Math.abs(offset) > 4 * delta) {
-						dx = -step * Math.sin(Math.toRadians(30.0));
-						dy = -Math.sqrt(step * step - dx * dx);
-					} else if (Math.abs(offset) > 2 * delta) {
-						dx = -step * Math.sin(Math.toRadians(60.0));
-						dy = -Math.sqrt(step * step - dx * dx);
-					}
+					dy = -Math.sqrt(step*step - dx*dx);
 				} else if (offset > 0) {
-					if (Math.abs(offset) > 4 * delta) {
-						dx = -step * Math.sin(Math.toRadians(150.0));
-						dy = Math.sqrt(step * step - dx * dx);
-					} else if (Math.abs(offset) > 2 * delta) {
-						dx = -step * Math.sin(Math.toRadians(120.0));
-						dy = Math.sqrt(step * step - dx * dx);
-					}
+					dy = Math.sqrt(step*step - dx*dx);
 				}
-				// System.out.format("\noffset is %d", offset);
-				// System.out.format("\ndx is %f, dy is %f", dx, dy);
-
 			}
 		}
 	}

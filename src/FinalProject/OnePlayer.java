@@ -171,29 +171,16 @@ protected  void checkForHit(){
 			dy=0; // this is a direct hit
 			int paddleCenter = paddleY + paddleLength/2;
 			int ballCenter = ballY + ballSize/2;
-			int offset = ballCenter - paddleCenter;
-			int delta = paddleLength/10;
+			double offset = ballCenter - paddleCenter;
+			double halfPaddle = paddleLength/2;
 			//set dx and dy dependent on region of paddle hit
+			double angleDeg = 90.0 + 60.0 * (offset/halfPaddle);
+			dx = -step * Math.sin(Math.toRadians(angleDeg));
 			if (offset < 0) {
-				if (Math.abs(offset) > 4*delta) {
-					dx = -step * Math.sin(Math.toRadians(30.0));
-					dy = -Math.sqrt(step*step - dx*dx);
-				} else if (Math.abs(offset) > 2*delta) {
-					dx = -step * Math.sin(Math.toRadians(60.0));
-					dy = -Math.sqrt(step*step - dx*dx);
-				}
+				dy = -Math.sqrt(step*step - dx*dx);
 			} else if (offset > 0) {
-				if (Math.abs(offset) > 4*delta) {
-					dx = -step * Math.sin(Math.toRadians(150.0));
-					dy = Math.sqrt(step*step - dx*dx);
-				} else if (Math.abs(offset) > 2*delta) {
-					dx = -step * Math.sin(Math.toRadians(120.0));
-					dy = Math.sqrt(step*step - dx*dx);
-				}
+				dy = Math.sqrt(step*step - dx*dx);
 			}
-			//System.out.format("\noffset is %d", offset);
-			//System.out.format("\ndx is %f, dy is %f", dx, dy); 
-
 		}
 	}	
 }
@@ -247,7 +234,7 @@ protected void highScore() throws ClassNotFoundException, SQLException {
     String name = JOptionPane.showInputDialog(frame, "Enter your initials");
     
     // update high score list with and score
-    MySQLConnector.addNewHighScore(name, score);
+    //MySQLConnector.addNewHighScore(name, score);
 }
   
     @Override
