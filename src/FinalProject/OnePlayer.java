@@ -69,7 +69,6 @@ public class OnePlayer extends JPanel implements Runnable {
         
         setOpaque(false);
         if (!clearScreen) {
-        	setOpaque(false);
         	g.setColor(Color.black);
         	//g.fillRect(ballX, ballY, ballSize, ballSize);
         	g.fillOval(ballX, ballY, ballSize, ballSize);

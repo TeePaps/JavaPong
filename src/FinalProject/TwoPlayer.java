@@ -94,6 +94,7 @@ public class TwoPlayer extends JPanel implements Runnable {
     		playerOne.setLength(100);
     		playerTwo.setLength(100);
     	}
+		
 		playing = true;
 		clearScreen = false;
 	}
@@ -161,18 +162,18 @@ public class TwoPlayer extends JPanel implements Runnable {
 				// set dx and dy dependent on region of paddle hit
 				if (offset < 0) {
 					if (Math.abs(offset) > 4 * delta) {
-						dx = -step * Math.sin(Math.toRadians(30.0));
+						dx = +step * Math.sin(Math.toRadians(30.0));
 						dy = -Math.sqrt(step * step - dx * dx);
 					} else if (Math.abs(offset) > 2 * delta) {
-						dx = -step * Math.sin(Math.toRadians(60.0));
+						dx = +step * Math.sin(Math.toRadians(60.0));
 						dy = -Math.sqrt(step * step - dx * dx);
 					}
 				} else if (offset > 0) {
 					if (Math.abs(offset) > 4 * delta) {
-						dx = -step * Math.sin(Math.toRadians(150.0));
+						dx = +step * Math.sin(Math.toRadians(150.0));
 						dy = Math.sqrt(step * step - dx * dx);
 					} else if (Math.abs(offset) > 2 * delta) {
-						dx = -step * Math.sin(Math.toRadians(120.0));
+						dx = +step * Math.sin(Math.toRadians(120.0));
 						dy = Math.sqrt(step * step - dx * dx);
 					}
 				}
@@ -188,6 +189,7 @@ public class TwoPlayer extends JPanel implements Runnable {
 			if (ballY >= paddle.getY() - ballSize + 1
 					&& ballY <= paddle.getY() + paddle.getLength() - 1) {
 				hits2++;
+				
 				dx = left;
 				dy = 0; // this is a direct hit
 				int paddleCenter = paddle.getY() + paddle.getLength() / 2;
